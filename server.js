@@ -20,7 +20,7 @@ const db = knex({
   }
 });
 
-app.get('/', (req, res) => db.select('*').from('users').then(users => res.json(users)));
+app.get('/', (req, res) => res.json("it is working"));
 
 app.post('/signin', (req, res) => signin.handleSigninPost(req, res, db, bcrypt));
 
