@@ -7,9 +7,9 @@ const app = new Clarifai.App({
 const handleApiCall = (req, res) => {
   app.models.predict(Clarifai.FACE_DETECT_MODEL, req.body.input)
     .then(response => res.json(response))
-    .catch(err => res.status(400).json(err,'unable to work with API'))
+    .catch(err => res.json(err))
 }
-
+//'unable to work with API'
 const handleImagePut = (req, res, db) => {
   const { id } = req.body;
   db('users')
