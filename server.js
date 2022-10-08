@@ -30,7 +30,7 @@ app.post('/register', (req, res) => register.handleRegisterPost(req, res, db, bc
 
 app.get('/profile/:id', (req, res) => profile.handleProfileGet(req, res, db));
 
-app.post('/imageurl', (req, res) => image.handleApiCall(req, res));
+app.post('/imageurl', (req, res) => { image.handleApiCall(req, res) });
 
 app.put('/image', (req, res) => image.handleImagePut(req, res, db));
 
