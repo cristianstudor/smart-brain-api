@@ -9,8 +9,8 @@ import image from './controllers/image.js';
 
 const app = express();
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
 const db = knex({
   client: 'pg',
