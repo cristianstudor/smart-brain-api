@@ -1,17 +1,11 @@
 import express from "express";
 import cors from "cors";
 import knex from "knex";
-import { createClient } from "@supabase/supabase-js";
 import bcrypt from "bcrypt-nodejs";
 import signin from "./controllers/signin.js";
 import register from "./controllers/register.js";
 import profile from "./controllers/profile.js";
 import image from "./controllers/image.js";
-
-const supabaseUrl = "https://bwkdcqbuyzektbbhhcaz.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ3a2RjcWJ1eXpla3RiYmhoY2F6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njk3MTAxODUsImV4cCI6MTk4NTI4NjE4NX0.ULB6HSikNpd0bH5fgt6TP_0gJDLaffz-CEi7vsROAJk";
-const supabase = createClient(supabaseUrl, supabaseKey);
 
 const app = express();
 
@@ -19,13 +13,19 @@ app.use(cors());
 app.use(express.json());
 
 const db = knex({
-  client: supabase
-  // connection: {
-  //   connectionString: process.env.DATABASE_URL,
-  //   ssl: {
-  //     rejectUnauthorized: false
-  //   }
-  // }
+  client: "pg",
+  connection: {
+    host: "smart-brain-bkend-db.internal",
+    port: 5432,
+    user: "postgres",
+    password: "8ovHz9bKyMKRHpO",
+    database: "smart-brain-bkend-db",
+    connectionString:
+      "postgres://postgres:8ovHz9bKyMKRHpO@smart-brain-bkend-db.internal:5432"
+    // ssl: {
+    //   rejectUnauthorized: false
+    // }
+  }
 });
 
 app.get("/", (req, res) =>
