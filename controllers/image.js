@@ -1,10 +1,10 @@
-import { ClarifaiStub, grpc } from 'clarifai-nodejs-grpc';
+import { ClarifaiStub, grpc } from "clarifai-nodejs-grpc";
 
 const stub = ClarifaiStub.grpc();
 const metadata = new grpc.Metadata();
 metadata.set("authorization", "Key a9e8af591f494958b178929c6b69eb68");
 
-const FACE_DETECT_MODEL = 'a403429f2ddf4b49b307e318f00e528b';
+const FACE_DETECT_MODEL = "45fb9a671625463fa646c3523a3087d5";
 
 const handleApiCall = (req, res) => {
   stub.PostModelOutputs(
@@ -14,39 +14,41 @@ const handleApiCall = (req, res) => {
     },
     metadata,
     (err, response) => {
-        if (err) {
-            throw new Error(err);
-        }
+      if (err) {
+        throw new Error(err);
+      }
 
-        if (response.status.code !== 10000) {
-            throw new Error("Post model outputs failed, status: " + response.status.description);
-        }
+      if (response.status.code !== 10000) {
+        throw new Error(
+          "Post model outputs failed, status: " + response.status.description
+        );
+      }
 
-        // const output = response.outputs[0];
-        // console.log("Predicted concepts:");
-        // for (const concept of output.data.concepts) {
-        //     console.log(concept.name + " " + concept.value);
-        // }
-        res.json(response);
+      // const output = response.outputs[0];
+      // console.log("Predicted concepts:");
+      // for (const concept of output.data.concepts) {
+      //     console.log(concept.name + " " + concept.value);
+      // }
+      res.json(response);
     }
   );
-}
+};
 
 const handleImagePut = (req, res, db) => {
   const { id } = req.body;
-  db('users')
-    .where('id', '=', id)
-    .increment('entries', 1)
-    .returning('entries')
-    .then(entries => {
+  db("users")
+    .where("id", "=", id)
+    .increment("entries", 1)
+    .returning("entries")
+    .then((entries) => {
       res.json(entries[0].entries);
     })
-    .catch(err => res.status(400).json('unable to get entries'))
-}
+    .catch((err) => res.status(400).json("unable to get entries"));
+};
 
 const image = {
   handleApiCall,
   handleImagePut
-}
+};
 
 export default image;
