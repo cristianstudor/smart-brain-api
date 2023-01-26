@@ -2,7 +2,7 @@ import { ClarifaiStub, grpc } from "clarifai-nodejs-grpc";
 
 const stub = ClarifaiStub.grpc();
 const metadata = new grpc.Metadata();
-metadata.set("authorization", "Key a9e8af591f494958b178929c6b69eb68");
+metadata.set("authorization", "Key " + process.env.API_CLARIFAI_KEY);
 
 const FACE_DETECT_MODEL = "face-detection";
 
