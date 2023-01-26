@@ -4,11 +4,15 @@ const stub = ClarifaiStub.grpc();
 const metadata = new grpc.Metadata();
 metadata.set("authorization", "Key a9e8af591f494958b178929c6b69eb68");
 
-const FACE_DETECT_MODEL = "45fb9a671625463fa646c3523a3087d5";
+const FACE_DETECT_MODEL = "face-detection";
 
 const handleApiCall = (req, res) => {
   stub.PostModelOutputs(
     {
+      user_app_id: {
+        user_id: "cristi",
+        app_id: "my-first-application"
+      },
       model_id: FACE_DETECT_MODEL,
       inputs: [{ data: { image: { url: req.body.input } } }]
     },
