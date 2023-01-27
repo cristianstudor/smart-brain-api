@@ -19,21 +19,27 @@ const handleApiCall = (req, res) => {
     metadata,
     (err, response) => {
       if (err) {
-        throw new Error(err);
+        //throw new Error(err);
+        console.error(err);
       }
 
       if (response.status.code !== 10000) {
-        throw new Error(
+        // throw new Error(
+        //   "Post model outputs failed, status: " + response.status.description
+        // );
+        console.error(
           "Post model outputs failed, status: " + response.status.description
         );
       }
 
-      // const output = response.outputs[0];
-      // console.log("Predicted concepts:");
-      // for (const concept of output.data.concepts) {
-      //     console.log(concept.name + " " + concept.value);
-      // }
-      res.json(response);
+      if (response && response.status.code === 10000) {
+        const output = response.outputs[0];
+        console.log("Predicted concepts:");
+        for (const concept of output.data.concepts) {
+          console.log(concept.name + " " + concept.value);
+        }
+        res.json(response);
+      }
     }
   );
 };
