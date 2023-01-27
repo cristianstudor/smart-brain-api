@@ -20,25 +20,22 @@ const handleApiCall = (req, res) => {
     (err, response) => {
       if (err) {
         //throw new Error(err);
+        //if throw new Error is triggered, Heroku app will crash!!!
         console.error(err);
       }
 
       if (response.status.code !== 10000) {
-        // throw new Error(
-        //   "Post model outputs failed, status: " + response.status.description
-        // );
+        //throw new Error( ... );
+        //if throw new Error is triggered, Heroku app will crash!!!
         console.error(
           "Post model outputs failed, status: " + response.status.description
         );
       }
 
       if (response && response.status.code === 10000) {
-        const output = response.outputs[0];
-        console.log("Predicted concepts:");
-        for (const concept of output.data.concepts) {
-          console.log(concept.name + " " + concept.value);
-        }
         res.json(response);
+      } else {
+        res.status(400).json("failed to get response");
       }
     }
   );
