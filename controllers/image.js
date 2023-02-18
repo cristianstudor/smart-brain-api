@@ -1,32 +1,36 @@
 import { ClarifaiStub, grpc } from "clarifai-nodejs-grpc";
 
 const stub = ClarifaiStub.grpc();
-const metadata = new grpc.Metadata();
-metadata.set("authorization", "Key " + process.env.API_CLARIFAI_KEY);
 
-const FACE_DETECT_MODEL = "face-detection";
+const PAT = process.env.API_CLARIFAI_PAT;
+const USER_ID = "cristi";
+const APP_ID = "my-first-application";
+const MODEL_ID = "face-detection";
+
+const metadata = new grpc.Metadata();
+metadata.set("authorization", "Key " + PAT);
 
 const handleApiCall = (req, res) => {
   stub.PostModelOutputs(
     {
       user_app_id: {
-        user_id: "cristi",
-        app_id: "my-first-application"
+        user_id: USER_ID,
+        app_id: APP_ID
       },
-      model_id: FACE_DETECT_MODEL,
+      model_id: MODEL_ID,
       inputs: [{ data: { image: { url: req.body.input } } }]
     },
     metadata,
     (err, response) => {
       if (err) {
         //throw new Error(err);
-        //if throw new Error is triggered, Heroku app will crash!!!
+        //if throw new Error is triggered, the app will crash!!!
         console.error(err);
       }
 
       if (response.status.code !== 10000) {
         //throw new Error( ... );
-        //if throw new Error is triggered, Heroku app will crash!!!
+        //if throw new Error is triggered, the app will crash!!!
         console.error(
           "Post model outputs failed, status: " + response.status.description
         );
