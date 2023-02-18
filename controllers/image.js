@@ -5,7 +5,7 @@ const stub = ClarifaiStub.grpc();
 const PAT = process.env.API_CLARIFAI_PAT;
 const USER_ID = "cristi";
 const APP_ID = "my-first-application";
-const MODEL_ID = "face-detection";
+const MODEL_ID = face-detection;
 
 const metadata = new grpc.Metadata();
 metadata.set("authorization", "Key " + PAT);
