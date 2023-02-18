@@ -5,7 +5,7 @@ const stub = ClarifaiStub.grpc();
 const PAT = process.env.API_CLARIFAI_PAT;
 const USER_ID = "cristi";
 const APP_ID = "my-first-application";
-const MODEL_ID = face-detection;
+//const MODEL_ID = "face-detection";
 
 const metadata = new grpc.Metadata();
 metadata.set("authorization", "Key " + PAT);
@@ -17,7 +17,7 @@ const handleApiCall = (req, res) => {
         user_id: USER_ID,
         app_id: APP_ID
       },
-      model_id: MODEL_ID,
+      model_id: face-detection,
       inputs: [{ data: { image: { url: req.body.input } } }]
     },
     metadata,
